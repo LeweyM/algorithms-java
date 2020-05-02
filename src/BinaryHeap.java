@@ -13,13 +13,35 @@ public class BinaryHeap {
     }
 
     public int deleteMax() {
-        return 0;
+        // swap root with end of tree, store old root to return
+        int max = a[0];
+        swap(a, 0, --N);
+        // sink
+        sink(0);
+        return max;
+    }
+
+    private void sink(int i) {
+        if (left(i) < N && a[left(i)] > a[i]) {
+            swap(a, left(i), i);
+            sink(left(i));
+        } else if (right(i) < N && a[right(i)] > a[i]) {
+            swap(a, right(i), i);
+            sink(right(i));
+        }
+    }
+
+    private int right(int i) {
+        return (i * 2) + 2;
+    }
+
+    private int left(int i) {
+        return (i * 2) + 1;
     }
 
     public void insert(int val) {
         a[N] = val; //insert at bottom
-        swim(N);
-        N++;
+        swim(N++);
     }
 
     private void swim(int i) {
